@@ -1,6 +1,10 @@
 import { useState } from "react";
 import classes from "./App.module.scss";
 
+function crash(): never {
+  throw new Error('CRASH!!!');
+}
+
 // TREE SHAKING
 function TODO(s: string) {
   console.log('TODOFUNCTION');
@@ -18,10 +22,13 @@ const App = () => {
   }
 
   return (
-    <div className={classes['counter']}>
+    <div data-testid={'excuse-me?'} className={classes['counter']}>
       <h1>PLATFORM: {__PLATFORM__}</h1>
       <div className={classes['counter__count']}>{count}</div>
-      <button className={classes['counter__button']} onClick={() => setCount((prev) => ++prev)}>
+      <button className={classes['counter__button']} onClick={() => {
+        setCount((prev) => ++prev);
+        crash();
+      }}>
         <span className={classes["counter__button-text"]}>add</span>
       </button>
     </div>

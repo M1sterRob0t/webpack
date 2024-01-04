@@ -1,11 +1,12 @@
 import { ModuleOptions } from "webpack";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { BuildOptions } from "./types/types";
-import ReactRefreshTypeScript from 'react-refresh-typescript';
+import ReactRefreshTypeScript from "react-refresh-typescript";
+import { buildBabelLoader } from "./babel/buildBabelLoader";
 
-export function buildLoaders({ mode }: BuildOptions): ModuleOptions["rules"] {
-  const isProd = mode === "production";
-  const isDev = mode === "development";
+export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
+  const isProd = options.mode === "production";
+  const isDev = options.mode === "development";
 
   const svgLoader = {
     test: /\.svg$/i,
@@ -59,16 +60,16 @@ export function buildLoaders({ mode }: BuildOptions): ModuleOptions["rules"] {
     test: /\.tsx?$/,
     use: [
       {
-        loader: 'ts-loader',
+        loader: "ts-loader",
         options: {
           getCustomTransformers: () => ({
             before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
           }),
           transpileOnly: true,
         },
-      }
-    ]
-  }
+      },
+    ],
+  };
 
   const scssLoader = {
     test: /\.s[ac]ss$/i,
@@ -82,5 +83,7 @@ export function buildLoaders({ mode }: BuildOptions): ModuleOptions["rules"] {
     ],
   };
 
-  return [assetLoader, svgLoader, tsLoader, scssLoader];
+  const babelLoader = buildBabelLoader(options);
+
+  return [assetLoader, svgLoader, babelLoader, scssLoader];
 }
