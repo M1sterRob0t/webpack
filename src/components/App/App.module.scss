@@ -1,0 +1,23 @@
+.counter__button {
+  background-color: red;
+  cursor: pointer;
+
+  .counter__button-text {
+    color: white;
+    font-size: 50px;
+  }
+
+  &:hover {
+    background-color: darken($color: red, $amount: 5%);
+  }
+}
+
+.counter {
+  margin: 100px auto;
+  text-align: center;
+}
+
+.counter__count {
+  font-size: 50px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

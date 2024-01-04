@@ -1,0 +1,15 @@
+.header {
+  background-color: beige;
+}
+
+.header__link {
+  font-size: 30px;
+  text-decoration: none;
+  margin-right: 15px;
+  color: rgb(20, 17, 17);
+  font-family: Verdana;
+
+  &:hover {
+    color: aqua;
+  }
+}
